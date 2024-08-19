@@ -1,5 +1,5 @@
 import { Pool, PoolOptions, createPool } from 'mysql2/promise';
-import credentialsMySQL from '../config/MySQL.config';
+import credentialsMySQL from '../../config/MySQL.config';
 
 const runMigration = async () => {
     const { database, ...dbConfigWithoutDB }: PoolOptions = credentialsMySQL;

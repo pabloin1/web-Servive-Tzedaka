@@ -13,8 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const MySQL_database_1 = __importDefault(require("../database/MySQL.database"));
-const listAll = () => __awaiter(void 0, void 0, void 0, function* () {
-    const sql = 'CALL GetAllForms()';
+const listAll = (dateinItial, dateFinal) => __awaiter(void 0, void 0, void 0, function* () {
+    const sql = `CALL GetAllForms( '${dateinItial}', '${dateFinal}' )`;
     const response = yield MySQL_database_1.default.executeQuery(sql);
     return response;
 });

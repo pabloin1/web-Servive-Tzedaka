@@ -13,7 +13,7 @@ const createCredentials = (host, database, user, password) => ({
     connectionLimit: 10,
     queueLimit: 0
 });
-const credentialsMySQLLocal = createCredentials('127.0.0.1', 'tzedaka1', 'root', '2004');
+const credentialsMySQLLocal = createCredentials('127.0.0.1', 'tzedaka', 'root', '2004');
 const credentialsMySQLHosting = createCredentials('127.0.0.1', 'sinevrok_db_orve', 'sinevrok_user_orve', 'orve.password');
 const credentialsMySQL = Server_1.default.isProduction ? credentialsMySQLHosting : credentialsMySQLLocal;
 exports.default = credentialsMySQL;

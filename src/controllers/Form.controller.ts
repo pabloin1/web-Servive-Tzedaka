@@ -4,7 +4,11 @@ import FormInterface from "../interfaces/Form.interface";
 import FormModel from "../models/Form.model";
 
 export const getForms = async (req: Request, res: Response): Promise<Response> => {
-  const response = await FormRepository.listAll();
+
+  const dateIntial :string = req.params.dateIntial ?? "1000-01-01";
+  const dateFinal :string = req.params.dateFinal ?? "1000-01-01";
+
+  const response = await FormRepository.listAll(dateIntial,dateFinal);
   let { status, error, message, value } = response;
   let formList: FormInterface[] = FormModel.castFormList(value[0]);
   return res.status(status).json({ status, error, message, value: formList });

@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migration":"node ./build/src/database/migrations/migration.js",
+    "store":"node ./build/src/database/migrations/SP_migration.js"
   },
   "keywords": [],
   "author": "",

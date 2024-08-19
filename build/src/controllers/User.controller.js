@@ -35,7 +35,7 @@ const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = (_a = value[0]) !== null && _a !== void 0 ? _a : User_model_1.default.getStructure();
     if (user.id === 0)
         status = 404;
-    return res.status(status).json({
+    return res.status(200).json({
         status,
         error,
         message,

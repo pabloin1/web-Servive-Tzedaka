@@ -16,7 +16,10 @@ exports.deleteForm = exports.patchFormReadStatus = exports.putForm = exports.pos
 const Form_repository_1 = __importDefault(require("../repositories/Form.repository"));
 const Form_model_1 = __importDefault(require("../models/Form.model"));
 const getForms = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const response = yield Form_repository_1.default.listAll();
+    var _a, _b;
+    const dateIntial = (_a = req.params.dateIntial) !== null && _a !== void 0 ? _a : "1000-01-01";
+    const dateFinal = (_b = req.params.dateFinal) !== null && _b !== void 0 ? _b : "1000-01-01";
+    const response = yield Form_repository_1.default.listAll(dateIntial, dateFinal);
     let { status, error, message, value } = response;
     let formList = Form_model_1.default.castFormList(value[0]);
     return res.status(status).json({ status, error, message, value: formList });

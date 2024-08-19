@@ -25,7 +25,7 @@ export const getUser = async (req: Request, res: Response): Promise<Response> =>
     const user: UserInterface = value[0] ?? UserModel.getStructure();
     if (user.id === 0) status = 404;
 
-    return res.status(status).json({
+    return res.status(200).json({
         status,
         error,
         message,
