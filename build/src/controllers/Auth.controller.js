@@ -15,15 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = void 0;
 const User_repository_1 = __importDefault(require("../repositories/User.repository"));
 const JWT_service_1 = __importDefault(require("../services/JWT.service"));
-const BCryptEncryption_service_1 = require("../services/BCryptEncryption.service");
-const encryptionService = new BCryptEncryption_service_1.BCryptEncryptionService();
+const Argon2Encryption_service_1 = require("../services/Argon2Encryption.service");
+const encryptionService = new Argon2Encryption_service_1.Argon2EncryptionService();
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     const user = yield User_repository_1.default.findByEmail(email);
     console.log(user);
     console.log(user === null || user === void 0 ? void 0 : user.password);
+    const pass = yield encryptionService.hashPassword(password);
     if (user) {
-        const isPasswordValid = yield encryptionService.comparePassword(password, user.password);
+        const isPasswordValid = yield encryptionService.comparePassword(password, pass);
         console.log(isPasswordValid);
         if (isPasswordValid) {
             const token = JWT_service_1.default.generateToken(user.id, user.email);

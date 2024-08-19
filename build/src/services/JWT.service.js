@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 class JWTService {
     constructor() {
-        this.secret = process.env.SECRETKEY || 'hola';
+        this.secret = process.env.SECRETKEY || "hola";
     }
     generateToken(id, email) {
         return jsonwebtoken_1.default.sign({ id, email }, this.secret, { expiresIn: "1h" });

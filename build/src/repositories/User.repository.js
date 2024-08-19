@@ -14,6 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const MySQL_database_1 = __importDefault(require("../database/MySQL.database"));
 const BCryptEncryption_service_1 = require("../services/BCryptEncryption.service");
+const Argon2Encryption_service_1 = require("../services/Argon2Encryption.service");
+const encryptionService1 = new Argon2Encryption_service_1.Argon2EncryptionService();
 const encryptionService = new BCryptEncryption_service_1.BCryptEncryptionService();
 const listAll = () => __awaiter(void 0, void 0, void 0, function* () {
     //aqui se va poner el codigo para la consulta sql
@@ -35,14 +37,14 @@ const findByEmail = (email) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const create = (user) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    user.password = yield encryptionService.hashPassword((_a = user.password) !== null && _a !== void 0 ? _a : "");
+    user.password = yield encryptionService1.hashPassword((_a = user.password) !== null && _a !== void 0 ? _a : "");
     const sql = `CALL CreateUser(${user.id}, '${user.email}', '${user.name}', '${user.password}', '${user.token}')`;
     const response = yield MySQL_database_1.default.executeQuery(sql);
     return response;
 });
 const update = (idUser, user) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    user.password = yield encryptionService.hashPassword((_a = user.password) !== null && _a !== void 0 ? _a : "");
+    user.password = yield encryptionService1.hashPassword((_a = user.password) !== null && _a !== void 0 ? _a : "");
     const sql = `CALL CreateUser(${idUser}, '${user.email}', '${user.name}', '${user.password}', '${user.token}')`;
     const response = yield MySQL_database_1.default.executeQuery(sql);
     return response;

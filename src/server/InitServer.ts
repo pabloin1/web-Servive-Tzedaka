@@ -20,7 +20,7 @@ export default class Server {
 
   async dbConnection() {
     try {
-      MySQl.connection()
+      MySQl.connection();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

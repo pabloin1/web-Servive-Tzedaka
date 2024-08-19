@@ -13,7 +13,7 @@ const createCredentials = (host: string, database: string, user: string, passwor
 
 const credentialsMySQLLocal = createCredentials(
     '127.0.0.1',
-    'tzedaka',
+    'tzedaka1',
     'root',
     '2004'
 );
