@@ -17,7 +17,7 @@ const BCryptEncryption_service_1 = require("../services/BCryptEncryption.service
 const encryptionService = new BCryptEncryption_service_1.BCryptEncryptionService();
 const listAll = () => __awaiter(void 0, void 0, void 0, function* () {
     //aqui se va poner el codigo para la consulta sql
-    const sql = 'CALL GetAllUsers()';
+    const sql = "CALL GetAllUsers()";
     const response = yield MySQL_database_1.default.executeQuery(sql);
     return response;
 });
@@ -36,14 +36,14 @@ const findByEmail = (email) => __awaiter(void 0, void 0, void 0, function* () {
 const create = (user) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     user.password = yield encryptionService.hashPassword((_a = user.password) !== null && _a !== void 0 ? _a : "");
-    const sql = `CALL CreateUser('${user.id}', '${user.email}', '${user.name}', '${user.password}', '${user.token}')`;
+    const sql = `CALL CreateUser(${user.id}, '${user.email}', '${user.name}', '${user.password}', '${user.token}')`;
     const response = yield MySQL_database_1.default.executeQuery(sql);
     return response;
 });
 const update = (idUser, user) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     user.password = yield encryptionService.hashPassword((_a = user.password) !== null && _a !== void 0 ? _a : "");
-    const sql = `CALL CreateUser('${idUser}', '${user.email}', '${user.name}', '${user.password}', '${user.token}')`;
+    const sql = `CALL CreateUser(${idUser}, '${user.email}', '${user.name}', '${user.password}', '${user.token}')`;
     const response = yield MySQL_database_1.default.executeQuery(sql);
     return response;
 });

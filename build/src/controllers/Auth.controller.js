@@ -18,16 +18,19 @@ const JWT_service_1 = __importDefault(require("../services/JWT.service"));
 const BCryptEncryption_service_1 = require("../services/BCryptEncryption.service");
 const encryptionService = new BCryptEncryption_service_1.BCryptEncryptionService();
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
     const { email, password } = req.body;
     const user = yield User_repository_1.default.findByEmail(email);
-    if (user && (yield encryptionService.comparePassword(password, (_a = user.password) !== null && _a !== void 0 ? _a : ""))) {
-        const token = JWT_service_1.default.generateToken(user.id, user.email);
-        return res.status(200).json({ token });
+    console.log(user);
+    console.log(user === null || user === void 0 ? void 0 : user.password);
+    if (user) {
+        const isPasswordValid = yield encryptionService.comparePassword(password, user.password);
+        console.log(isPasswordValid);
+        if (isPasswordValid) {
+            const token = JWT_service_1.default.generateToken(user.id, user.email);
+            return res.status(200).json({ token });
+        }
     }
-    else {
-        return res.status(401).json({ message: "Invalid credentials" });
-    }
+    return res.status(401).json({ message: "Invalid credentials" });
 });
 exports.login = login;
 //# sourceMappingURL=Auth.controller.js.map
