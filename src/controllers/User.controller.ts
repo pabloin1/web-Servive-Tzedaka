@@ -43,12 +43,12 @@ export const postUser = async (req: Request, res: Response): Promise<Response> =
         status,
         error,
         message,
-        value:idUser
+        value: idUser
     });
 };
 
 export const putUser = async (req: Request, res: Response): Promise<Response> => {
-    const idUser:number = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
+    const idUser: number = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
     const user: UserInterface = req.body.user;
     const response = await UserRepository.update(idUser, user);
     let { status, error, message, value } = response;
@@ -61,15 +61,29 @@ export const putUser = async (req: Request, res: Response): Promise<Response> =>
     });
 };
 
-export const deleteUser = async (req: Request, res: Response): Promise<Response> => {
-    const idUser:number = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
-    const response = await UserRepository.deleteUser(idUser);
-    let { status, error, message , value } = response;
+export const updateUserPassword = async (req: Request, res: Response): Promise<Response> => {
+    const idUser: number = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
+    const password: string = req.body.password;
+    const response = await UserRepository.updatePassword(idUser, password);
+    let { status, error, message, value } = response;
 
     return res.status(status).json({
         status,
         error,
         message,
-        value:idUser
+        value
+    });
+};
+
+export const deleteUser = async (req: Request, res: Response): Promise<Response> => {
+    const idUser: number = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
+    const response = await UserRepository.deleteUser(idUser);
+    let { status, error, message, value } = response;
+
+    return res.status(status).json({
+        status,
+        error,
+        message,
+        value: idUser
     });
 };

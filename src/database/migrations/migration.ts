@@ -13,18 +13,17 @@ const runMigration = async () => {
         await connection.query(`USE \`${database}\`;`);
 
         await connection.execute(`
-            CREATE TABLE IF NOT EXISTS Users (
+            CREATE TABLE IF NOT EXISTS user (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 email VARCHAR(255) NOT NULL,
                 name VARCHAR(255) NOT NULL,
-                password VARCHAR(255) NOT NULL,
-                token VARCHAR(255)
+                password VARCHAR(255) NOT NULL
             );
         `);
 
         // Table Product
         await connection.execute(`
-            CREATE TABLE IF NOT EXISTS Products (
+            CREATE TABLE IF NOT EXISTS product (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 amount DECIMAL(10, 2) NOT NULL,
                 description TEXT NOT NULL
@@ -33,20 +32,22 @@ const runMigration = async () => {
 
         // Table Form
         await connection.execute(`
-            CREATE TABLE IF NOT EXISTS Forms (
+            CREATE TABLE IF NOT EXISTS form (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 subject VARCHAR(255) NOT NULL,
                 full_name VARCHAR(255) NOT NULL,
                 phone VARCHAR(20) NOT NULL,
                 email VARCHAR(255) NOT NULL,
                 message TEXT NOT NULL,
-                readed BOOLEAN NOT NULL DEFAULT false
+                readed BOOLEAN NOT NULL DEFAULT false,
+                date DATE,
+                hour TIME
             );
         `);
 
         // Table Configuration
         await connection.execute(`
-            CREATE TABLE IF NOT EXISTS Configurations (
+            CREATE TABLE IF NOT EXISTS configuration (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 mission TEXT NOT NULL,
                 vision TEXT NOT NULL,

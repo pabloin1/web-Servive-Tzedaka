@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.putUser = exports.postUser = exports.getUser = exports.getUsers = void 0;
+exports.deleteUser = exports.updateUserPassword = exports.putUser = exports.postUser = exports.getUser = exports.getUsers = void 0;
 const User_repository_1 = __importDefault(require("../repositories/User.repository"));
 const User_model_1 = __importDefault(require("../models/User.model"));
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -69,6 +69,19 @@ const putUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     });
 });
 exports.putUser = putUser;
+const updateUserPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idUser = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
+    const password = req.body.password;
+    const response = yield User_repository_1.default.updatePassword(idUser, password);
+    let { status, error, message, value } = response;
+    return res.status(status).json({
+        status,
+        error,
+        message,
+        value
+    });
+});
+exports.updateUserPassword = updateUserPassword;
 const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idUser = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
     const response = yield User_repository_1.default.deleteUser(idUser);

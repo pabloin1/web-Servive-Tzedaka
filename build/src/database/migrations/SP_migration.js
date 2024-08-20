@@ -62,31 +62,39 @@ const runStoredProceduresMigration = () => __awaiter(void 0, void 0, void 0, fun
             // CreateForm procedure
             `
             CREATE PROCEDURE CreateForm(
-                IN p_id INT,
-                IN p_subjects VARCHAR(255), 
-                IN p_full_name VARCHAR(255), 
-                IN p_phone VARCHAR(255), 
-                IN p_email VARCHAR(255), 
-                IN p_message VARCHAR(255), 
-                IN p_readed TINYINT
-            )
-            BEGIN
-                IF (p_id = 0) THEN
-                    INSERT INTO form (subjects, full_name, phone, email, message, readed)
-                    VALUES (p_subjects, p_full_name, p_phone, p_email, p_message, p_readed);
-                    SELECT LAST_INSERT_ID() AS id;
-                ELSE 
-                    UPDATE form
-                    SET subjects = p_subjects, 
-                        full_name = p_full_name, 
-                        phone = p_phone, 
-                        email = p_email, 
-                        message = p_message, 
-                        readed = p_readed
-                    WHERE id = p_id;
-                    SELECT p_id AS id;
-                END IF;
-            END;
+    IN p_id INT,
+    IN p_subjects VARCHAR(255), 
+    IN p_full_name VARCHAR(255), 
+    IN p_phone VARCHAR(255), 
+    IN p_email VARCHAR(255), 
+    IN p_message VARCHAR(255), 
+    IN p_readed TINYINT
+)
+BEGIN
+    DECLARE v_date DATE;
+    DECLARE v_hour TIME;
+    
+    SET v_date = CURDATE();
+    SET v_hour = CURTIME();
+
+    IF (p_id = 0) THEN
+        INSERT INTO form (subjects, full_name, phone, email, message, readed, date, hour)
+        VALUES (p_subjects, p_full_name, p_phone, p_email, p_message, p_readed, v_date, v_hour);
+        SELECT LAST_INSERT_ID() AS id;
+    ELSE 
+        UPDATE form
+        SET  subjects = p_subjects, 
+             full_name = p_full_name, 
+             phone = p_phone, 
+             email = p_email, 
+             message = p_message, 
+             readed = p_readed,
+             date = v_date,
+             hour = v_hour
+        WHERE id = p_id;
+        SELECT p_id AS id;
+    END IF;
+END;
             `,
             // CreateProduct procedure
             `
@@ -110,28 +118,16 @@ const runStoredProceduresMigration = () => __awaiter(void 0, void 0, void 0, fun
             `,
             // CreateUser procedure
             `
-            CREATE PROCEDURE CreateUser(
-                IN p_id INT,
-                IN p_email VARCHAR(45), 
-                IN p_name VARCHAR(45), 
-                IN p_password VARCHAR(255), 
-                IN p_token VARCHAR(45)
-            )
-            BEGIN 
-                IF (p_id = 0) THEN
-                    INSERT INTO user (email, name, password, token)
-                    VALUES (p_email, p_name, SHA2(p_password, 256), p_token);
-                    SELECT LAST_INSERT_ID() AS id;
-                ELSE 
-                    UPDATE user
-                    SET email = p_email,
-                        name = p_name,
-                        password = SHA2(p_password, 256), 
-                        token = p_token
-                    WHERE id = p_id;
-                    SELECT p_id AS id;
-                END IF;
-            END;
+            CREATE DEFINER=root@localhost PROCEDURE CreateUser(
+    IN p_email VARCHAR(45), 
+    IN p_name VARCHAR(45), 
+    IN p_password VARCHAR(255)
+)
+BEGIN
+    INSERT INTO tzedaka.user (email, name, password)
+    VALUES (p_email, p_name,p_password);
+    SELECT LAST_INSERT_ID() AS id;
+END
             `,
             // DeleteForm procedure
             `
@@ -232,14 +228,40 @@ const runStoredProceduresMigration = () => __awaiter(void 0, void 0, void 0, fun
                 SELECT p_id AS id, p_readed AS read_status;
             END;
             `,
+            `
+            CREATE  PROCEDURE UpdateUser(
+    IN p_id INT,
+    IN p_email VARCHAR(45), 
+    IN p_name VARCHAR(45)
+)
+BEGIN
+    UPDATE tzedaka.user SET
+        email = p_email,
+        name = p_name
+    WHERE id = p_id;
+    SELECT p_id AS id;
+END
+            `,
+            `
+            CREATE PROCEDURE UpdateUserPassword(
+    IN p_id INT,
+    IN p_password VARCHAR(255)
+)
+BEGIN
+    UPDATE tzedaka.user SET
+        password = p_password
+    WHERE id = p_id;
+    SELECT p_id AS id;
+END
+            `,
         ];
         for (const procedure of storedProcedures) {
             yield connection.query(procedure);
         }
-        console.log('Stored procedures migration completed successfully.');
+        console.log("Stored procedures migration completed successfully.");
     }
     catch (error) {
-        console.error('Stored procedures migration failed:', error);
+        console.error("Stored procedures migration failed:", error);
     }
     finally {
         yield connection.end();

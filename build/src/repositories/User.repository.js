@@ -13,18 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const MySQL_database_1 = __importDefault(require("../database/MySQL.database"));
-const BCryptEncryption_service_1 = require("../services/BCryptEncryption.service");
 const Argon2Encryption_service_1 = require("../services/Argon2Encryption.service");
 const encryptionService1 = new Argon2Encryption_service_1.Argon2EncryptionService();
-const encryptionService = new BCryptEncryption_service_1.BCryptEncryptionService();
 const listAll = () => __awaiter(void 0, void 0, void 0, function* () {
-    //aqui se va poner el codigo para la consulta sql
     const sql = "CALL GetAllUsers()";
     const response = yield MySQL_database_1.default.executeQuery(sql);
     return response;
 });
 const listOne = (idUser) => __awaiter(void 0, void 0, void 0, function* () {
-    //aqui se va poner el codigo para la consulta sql
     const sql = `CALL GetUser('${idUser}')`;
     const response = yield MySQL_database_1.default.executeQuery(sql);
     return response;
@@ -38,19 +34,22 @@ const findByEmail = (email) => __awaiter(void 0, void 0, void 0, function* () {
 const create = (user) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     user.password = yield encryptionService1.hashPassword((_a = user.password) !== null && _a !== void 0 ? _a : "");
-    const sql = `CALL CreateUser(${user.id}, '${user.email}', '${user.name}', '${user.password}', '${user.token}')`;
+    const sql = `CALL CreateUser('${user.email}', '${user.name}', '${user.password}')`;
     const response = yield MySQL_database_1.default.executeQuery(sql);
     return response;
 });
 const update = (idUser, user) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
-    user.password = yield encryptionService1.hashPassword((_a = user.password) !== null && _a !== void 0 ? _a : "");
-    const sql = `CALL CreateUser(${idUser}, '${user.email}', '${user.name}', '${user.password}', '${user.token}')`;
+    const sql = `CALL UpdateUser(${idUser}, '${user.email}', '${user.name}')`;
+    const response = yield MySQL_database_1.default.executeQuery(sql);
+    return response;
+});
+const updatePassword = (idUser, password) => __awaiter(void 0, void 0, void 0, function* () {
+    const hashedPassword = yield encryptionService1.hashPassword(password);
+    const sql = `CALL UpdateUserPassword(${idUser}, '${hashedPassword}')`;
     const response = yield MySQL_database_1.default.executeQuery(sql);
     return response;
 });
 const deleteUser = (idUser) => __awaiter(void 0, void 0, void 0, function* () {
-    //aqui se va poner el codigo para la consulta sql
     const sql = `CALL DeleteUser('${idUser}')`;
     const response = yield MySQL_database_1.default.executeQuery(sql);
     return response;
@@ -61,6 +60,7 @@ const UserRepository = {
     findByEmail,
     create,
     update,
+    updatePassword,
     deleteUser,
 };
 exports.default = UserRepository;
