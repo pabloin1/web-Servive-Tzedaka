@@ -34,6 +34,6 @@ router.put(
   (req: Request, res: Response) => putProduct(req, res)
 );
 
-router.delete('/:id',[validateFields] ,(req: Request, res: Response) => deleteProduct(req, res));
+router.delete('/:id',[authenticateToken,validateFields] ,(req: Request, res: Response) => deleteProduct(req, res));
 
 export default router;

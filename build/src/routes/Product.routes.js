@@ -10,7 +10,7 @@ const validateFields_mdl_1 = require("../middlewares/validateFields.mdl");
 const ValidateJWT_mdl_1 = __importDefault(require("../middlewares/ValidateJWT.mdl"));
 const router = (0, express_1.Router)();
 router.get("/", (req, res) => (0, Product_controller_1.getProducts)(req, res));
-router.get("/:id", [ValidateJWT_mdl_1.default, validateFields_mdl_1.validateFields], (req, res) => (0, Product_controller_1.getProduct)(req, res));
+router.get("/:id", [validateFields_mdl_1.validateFields], (req, res) => (0, Product_controller_1.getProduct)(req, res));
 router.post("/", [
     ValidateJWT_mdl_1.default,
     (0, express_validator_1.body)('product.amount', 'Amount must be a number').isNumeric(),
