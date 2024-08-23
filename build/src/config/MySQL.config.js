@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Server_1 = __importDefault(require("../server/Server"));
+const Config_1 = __importDefault(require("./Config"));
 const createCredentials = (host, database, user, password) => ({
     host,
     database,
@@ -13,7 +14,7 @@ const createCredentials = (host, database, user, password) => ({
     connectionLimit: 10,
     queueLimit: 0
 });
-const credentialsMySQLLocal = createCredentials('127.0.0.1', 'tzedaka', 'root', '2004');
+const credentialsMySQLLocal = createCredentials(Config_1.default.dbHost, Config_1.default.dbName, Config_1.default.dbUser, Config_1.default.dbPassword);
 const credentialsMySQLHosting = createCredentials('127.0.0.1', 'sinevrok_db_orve', 'sinevrok_user_orve', 'orve.password');
 const credentialsMySQL = Server_1.default.isProduction ? credentialsMySQLHosting : credentialsMySQLLocal;
 exports.default = credentialsMySQL;

@@ -1,6 +1,8 @@
 import { Response, NextFunction } from 'express';
 import AuthRequest  from '../interfaces/AuthRequest.interface';
-import JWTService from '../services/JWT.service';
+import Jwt from '../helper/JWT.helper';
+
+const jwt = new Jwt()
 
 const authenticateToken = (req: AuthRequest, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
@@ -11,7 +13,7 @@ const authenticateToken = (req: AuthRequest, res: Response, next: NextFunction) 
     }
 
     try {
-        const user = JWTService.verifyToken(token) as { id: number; email: string };
+        const user = jwt.verifyToken(token) as { id: number; email: string };
         req.user = user; 
         next(); 
     } catch (error) {

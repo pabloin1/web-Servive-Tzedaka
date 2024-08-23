@@ -1,11 +1,12 @@
 import jwt from "jsonwebtoken";
-import { JwtInterface } from "../interfaces//Jwt.interface";
+import { JwtInterface } from "../interfaces/Jwt.interface";
+import config from "../config/Config";
 
-class JWTService implements JwtInterface {
+class Jwt implements JwtInterface {
   private secret: string;
 
   constructor() {
-    this.secret = process.env.SECRETKEY || "hola";
+    this.secret = config.jwtSecret;
   }
 
   generateToken(id: number, email: string): string {
@@ -17,4 +18,4 @@ class JWTService implements JwtInterface {
   }
 }
 
-export default new JWTService();
+export default Jwt;

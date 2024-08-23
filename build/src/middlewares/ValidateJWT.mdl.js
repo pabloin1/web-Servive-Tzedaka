@@ -3,7 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const JWT_service_1 = __importDefault(require("../services/JWT.service"));
+const JWT_helper_1 = __importDefault(require("../helper/JWT.helper"));
+const jwt = new JWT_helper_1.default();
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.startsWith('Bearer ') ? authHeader.split(' ')[1] : null;
@@ -11,7 +12,7 @@ const authenticateToken = (req, res, next) => {
         return res.status(401).json({ message: "Token missing" });
     }
     try {
-        const user = JWT_service_1.default.verifyToken(token);
+        const user = jwt.verifyToken(token);
         req.user = user;
         next();
     }

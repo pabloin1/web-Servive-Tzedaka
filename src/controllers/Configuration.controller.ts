@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import ConfigurationRepository from '../repositories/Configuration.repository';
-import ConfigurationInterface from "../interfaces/Configuration.interface";
 import ConfigurationModel from "../models/Configuration.model";
 
 export const getConfigurations = async (req: Request, res: Response): Promise<Response> => {

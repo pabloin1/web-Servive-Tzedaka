@@ -1,5 +1,6 @@
 import { DatabaseType } from "../interfaces/DatabaseConfig.interface";
 import Server from "../server/Server";
+import config from "./Config";
 
 const createCredentials = (host: string, database: string, user: string, password: string): DatabaseType => ({
     host,
@@ -11,11 +12,13 @@ const createCredentials = (host: string, database: string, user: string, passwor
     queueLimit: 0
 });
 
+
+
 const credentialsMySQLLocal = createCredentials(
-    '127.0.0.1',
-    'tzedaka',
-    'root',
-    '2004'
+    config.dbHost,
+    config.dbName,
+    config.dbUser,
+    config.dbPassword
 );
 
 const credentialsMySQLHosting = createCredentials(

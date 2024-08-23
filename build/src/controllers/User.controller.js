@@ -70,22 +70,24 @@ const putUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.putUser = putUser;
 const updateUserPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const idUser = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
+    const id = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
     const password = req.body.password;
-    const response = yield User_repository_1.default.updatePassword(idUser, password);
+    const response = yield User_repository_1.default.updatePassword(id, password);
     let { status, error, message, value } = response;
+    const idUser = value[0][0].id;
     return res.status(status).json({
         status,
         error,
         message,
-        value
+        value: idUser
     });
 });
 exports.updateUserPassword = updateUserPassword;
 const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const idUser = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
-    const response = yield User_repository_1.default.deleteUser(idUser);
+    const id = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
+    const response = yield User_repository_1.default.deleteUser(id);
     let { status, error, message, value } = response;
+    const idUser = value[0][0].id;
     return res.status(status).json({
         status,
         error,

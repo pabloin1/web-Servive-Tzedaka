@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const Config_1 = __importDefault(require("../config/Config"));
-class JWTService {
+class Jwt {
     constructor() {
         this.secret = Config_1.default.jwtSecret;
     }
@@ -16,5 +16,5 @@ class JWTService {
         return jsonwebtoken_1.default.verify(token, this.secret);
     }
 }
-exports.default = new JWTService();
-//# sourceMappingURL=JWT.service.js.map
+exports.default = Jwt;
+//# sourceMappingURL=JWT.helper.js.map

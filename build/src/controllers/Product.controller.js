@@ -59,10 +59,11 @@ const postProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.postProduct = postProduct;
 const putProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // Obtenemos el idProduct de los parámetros de la URL
-    const idProduct = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
+    const id = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
     const product = req.body.product;
-    const response = yield Product_repository_1.default.update(idProduct, product);
+    const response = yield Product_repository_1.default.update(id, product);
     let { status, error, message, value } = response;
+    const idProduct = value[0][0].id;
     return res.status(status).json({
         status,
         error,
@@ -72,9 +73,10 @@ const putProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.putProduct = putProduct;
 const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const idProduct = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
-    const response = yield Product_repository_1.default.deleteProduct(idProduct);
+    const id = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
+    const response = yield Product_repository_1.default.deleteProduct(id);
     let { status, error, message, value } = response;
+    const idProduct = value[0][0].id;
     return res.status(status).json({
         status,
         error,

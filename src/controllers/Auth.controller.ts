@@ -1,26 +1,28 @@
 import { Request, Response } from "express";
 import UserRepository from "../repositories/User.repository";
-import JWTService from "../services/JWT.service";
-import { Argon2EncryptionService } from "../services/Argon2Encryption.service";
+import Jwt from "../helper/JWT.helper";
+import { Argon2Encryption } from "../helper/Argon2Encryption.helper";
 
-const encryptionService = new Argon2EncryptionService();
+const encryption = new Argon2Encryption()
+const jwt = new Jwt()
+
 
 export const login = async (req: Request, res: Response): Promise<Response> => {
-  const { email, password } = req.body;
+  const { name, password } = req.body;
 
-  const user = await UserRepository.findByEmail(email);
+  const user = await UserRepository.findByEmail(name);
 
   if (!user) {
     return res.status(401).json({ message: "Invalid credentials" });
   }
 
-  const isPasswordValid = await encryptionService.comparePassword(
+  const isPasswordValid = await encryption.comparePassword(
     password,
     user.password
   );
 
   if (isPasswordValid) {
-    const token = JWTService.generateToken(user.id, user.email);
+    const token = jwt.generateToken(user.id, user.email);
     return res.status(200).json({ value:token });
   }
 

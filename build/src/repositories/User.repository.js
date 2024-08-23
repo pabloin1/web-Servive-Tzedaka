@@ -13,8 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const MySQL_database_1 = __importDefault(require("../database/MySQL.database"));
-const Argon2Encryption_service_1 = require("../services/Argon2Encryption.service");
-const encryptionService1 = new Argon2Encryption_service_1.Argon2EncryptionService();
+const Argon2Encryption_helper_1 = require("../helper/Argon2Encryption.helper");
+const encryptionService1 = new Argon2Encryption_helper_1.Argon2Encryption();
 const listAll = () => __awaiter(void 0, void 0, void 0, function* () {
     const sql = "CALL GetAllUsers()";
     const response = yield MySQL_database_1.default.executeQuery(sql);
@@ -25,8 +25,8 @@ const listOne = (idUser) => __awaiter(void 0, void 0, void 0, function* () {
     const response = yield MySQL_database_1.default.executeQuery(sql);
     return response;
 });
-const findByEmail = (email) => __awaiter(void 0, void 0, void 0, function* () {
-    const sql = `CALL GetUserByEmail('${email}')`;
+const findByEmail = (name) => __awaiter(void 0, void 0, void 0, function* () {
+    const sql = `CALL GetUserByEmail('${name}')`;
     const response = yield MySQL_database_1.default.executeQuery(sql);
     const user = response.value[0][0];
     return user ? Object.assign({}, user) : null;

@@ -14,18 +14,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = void 0;
 const User_repository_1 = __importDefault(require("../repositories/User.repository"));
-const JWT_service_1 = __importDefault(require("../services/JWT.service"));
-const Argon2Encryption_service_1 = require("../services/Argon2Encryption.service");
-const encryptionService = new Argon2Encryption_service_1.Argon2EncryptionService();
+const JWT_helper_1 = __importDefault(require("../helper/JWT.helper"));
+const Argon2Encryption_helper_1 = require("../helper/Argon2Encryption.helper");
+const encryption = new Argon2Encryption_helper_1.Argon2Encryption();
+const jwt = new JWT_helper_1.default();
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { email, password } = req.body;
-    const user = yield User_repository_1.default.findByEmail(email);
+    const { name, password } = req.body;
+    const user = yield User_repository_1.default.findByEmail(name);
     if (!user) {
         return res.status(401).json({ message: "Invalid credentials" });
     }
-    const isPasswordValid = yield encryptionService.comparePassword(password, user.password);
+    const isPasswordValid = yield encryption.comparePassword(password, user.password);
     if (isPasswordValid) {
-        const token = JWT_service_1.default.generateToken(user.id, user.email);
+        const token = jwt.generateToken(user.id, user.email);
         return res.status(200).json({ value: token });
     }
     return res.status(401).json({ message: "Invalid credentials" });

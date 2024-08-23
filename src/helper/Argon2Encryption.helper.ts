@@ -1,7 +1,7 @@
 import argon2 from "argon2";
-import { IEncryptionService } from "../interfaces/Encryption.interface";
+import { IEncryptionInterface } from "../interfaces/Encryption.interface";
 
-export class Argon2EncryptionService implements IEncryptionService {
+export class Argon2Encryption implements IEncryptionInterface {
   private options = {
     type: argon2.argon2id,
     memoryCost: 2 ** 16,

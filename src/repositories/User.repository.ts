@@ -1,9 +1,9 @@
 import MySQL from "../database/MySQL.database";
 import UserInterface from "../interfaces/User.interface";
 import ResponseInterface from "../interfaces/Response.interface";
-import { Argon2EncryptionService } from "../services/Argon2Encryption.service";
+import { Argon2Encryption } from "../helper/Argon2Encryption.helper";
 
-const encryptionService1 = new Argon2EncryptionService();
+const encryptionService1 = new Argon2Encryption();
 
 const listAll = async (): Promise<ResponseInterface> => {
   const sql: string = "CALL GetAllUsers()";
@@ -17,8 +17,8 @@ const listOne = async (idUser: number): Promise<ResponseInterface> => {
   return response;
 };
 
-const findByEmail = async (email: string): Promise<UserInterface | null> => {
-  const sql = `CALL GetUserByEmail('${email}')`;
+const findByEmail = async (name: string): Promise<UserInterface | null> => {
+  const sql = `CALL GetUserByEmail('${name}')`;
   const response: ResponseInterface = await MySQL.executeQuery(sql);
   const user = response.value[0][0];
   return user ? { ...user } : null;

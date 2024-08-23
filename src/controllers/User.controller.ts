@@ -62,24 +62,24 @@ export const putUser = async (req: Request, res: Response): Promise<Response> =>
 };
 
 export const updateUserPassword = async (req: Request, res: Response): Promise<Response> => {
-    const idUser: number = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
+    const id: number = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
     const password: string = req.body.password;
-    const response = await UserRepository.updatePassword(idUser, password);
+    const response = await UserRepository.updatePassword(id, password);
     let { status, error, message, value } = response;
-
+    const idUser = value[0][0].id;
     return res.status(status).json({
         status,
         error,
         message,
-        value
+        value:idUser
     });
 };
 
 export const deleteUser = async (req: Request, res: Response): Promise<Response> => {
-    const idUser: number = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
-    const response = await UserRepository.deleteUser(idUser);
+    const id: number = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
+    const response = await UserRepository.deleteUser(id);
     let { status, error, message, value } = response;
-
+    const idUser = value[0][0].id;
     return res.status(status).json({
         status,
         error,

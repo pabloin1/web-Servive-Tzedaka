@@ -57,14 +57,16 @@ const patchFormReadStatus = (req, res) => __awaiter(void 0, void 0, void 0, func
     const { read } = req.body;
     const response = yield Form_repository_1.default.updateReadStatus(id, read);
     let { status, error, message, value } = response;
-    return res.status(status).json({ status, error, message, value });
+    const idForm = value[0][0].id;
+    return res.status(status).json({ status, error, message, value: idForm });
 });
 exports.patchFormReadStatus = patchFormReadStatus;
 const deleteForm = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const idForm = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
-    const response = yield Form_repository_1.default.deleteForm(idForm);
-    let { status, error, message } = response;
-    return res.status(status).json({ status, error, message });
+    const id = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
+    const response = yield Form_repository_1.default.deleteForm(id);
+    let { status, error, message, value } = response;
+    const idForm = value[0][0].id;
+    return res.status(status).json({ status, error, message, value: idForm });
 });
 exports.deleteForm = deleteForm;
 //# sourceMappingURL=Form.controller.js.map

@@ -1,8 +1,12 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const Config_1 = __importDefault(require("../config/Config"));
 const server = {
     isProduction: false,
-    PORT: process.env.PORT || "8080",
+    PORT: Config_1.default.port,
 };
 exports.default = server;
 //# sourceMappingURL=Server.js.map

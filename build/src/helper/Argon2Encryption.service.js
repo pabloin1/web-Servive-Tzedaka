@@ -12,20 +12,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SHA256EncryptionService = void 0;
-const crypto_1 = __importDefault(require("crypto"));
-class SHA256EncryptionService {
+exports.Argon2EncryptionService = void 0;
+const argon2_1 = __importDefault(require("argon2"));
+class Argon2EncryptionService {
+    constructor() {
+        this.options = {
+            type: argon2_1.default.argon2id,
+            memoryCost: 2 ** 16,
+            timeCost: 3,
+            parallelism: 1,
+        };
+        this.options;
+    }
     hashPassword(password) {
         return __awaiter(this, void 0, void 0, function* () {
-            return crypto_1.default.createHash('sha256').update(password).digest('hex');
+            return argon2_1.default.hash(password, this.options);
         });
     }
     comparePassword(password, hashedPassword) {
         return __awaiter(this, void 0, void 0, function* () {
-            const hashedInput = yield this.hashPassword(password);
-            return hashedInput === hashedPassword;
+            try {
+                return yield argon2_1.default.verify(hashedPassword, password);
+            }
+            catch (err) {
+                return false;
+            }
         });
     }
 }
-exports.SHA256EncryptionService = SHA256EncryptionService;
-//# sourceMappingURL=CryptoEncription.service.js.map
+exports.Argon2EncryptionService = Argon2EncryptionService;
+//# sourceMappingURL=Argon2Encryption.service.js.map

@@ -44,14 +44,15 @@ export const patchFormReadStatus = async (req: Request, res: Response): Promise<
   const { read } = req.body;
   const response = await FormRepository.updateReadStatus(id, read);
   let { status, error, message, value } = response;
-
-  return res.status(status).json({status,error,message,value });
+  const idForm = value[0][0].id;
+  return res.status(status).json({status,error,message,value:idForm });
 };
 
 
 export const deleteForm = async (req: Request, res: Response): Promise<Response> => {
-  const idForm: number = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
-  const response = await FormRepository.deleteForm(idForm);
-  let { status, error, message } = response;
-  return res.status(status).json({ status, error, message });
+  const id: number = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
+  const response = await FormRepository.deleteForm(id);
+  let { status, error, message, value } = response;
+  const idForm = value[0][0].id;
+  return res.status(status).json({ status, error, message,value:idForm  });
 };
