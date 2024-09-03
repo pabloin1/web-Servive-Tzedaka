@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { JwtInterface } from "../interfaces/Jwt.interface";
 import config from "../config/Config";
 
-class Jwt implements JwtInterface {
+export class Jwt implements JwtInterface {
   private secret: string;
 
   constructor() {
@@ -10,7 +10,7 @@ class Jwt implements JwtInterface {
   }
 
   generateToken(id: number, email: string): string {
-    return jwt.sign({ id, email }, this.secret, { expiresIn: "1h" });
+    return jwt.sign({ id, email }, this.secret, { expiresIn: "8h" });
   }
 
   verifyToken(token: string): any {

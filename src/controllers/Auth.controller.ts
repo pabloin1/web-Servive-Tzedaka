@@ -23,8 +23,8 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
 
   if (isPasswordValid) {
     const token = jwt.generateToken(user.id, user.email);
-    return res.status(200).json({ value:token });
+    return res.status(200).json({status:200, value:token });
   }
 
-  return res.status(401).json({ message: "Invalid credentials" });
+  return res.status(200).json({status:404, message: "Invalid credentials" });
 };

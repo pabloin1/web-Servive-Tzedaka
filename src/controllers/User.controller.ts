@@ -79,11 +79,11 @@ export const deleteUser = async (req: Request, res: Response): Promise<Response>
     const id: number = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
     const response = await UserRepository.deleteUser(id);
     let { status, error, message, value } = response;
-    const idUser = value[0][0].id;
+    
     return res.status(status).json({
         status,
         error,
         message,
-        value: idUser
+        value:id
     });
 };

@@ -27,9 +27,9 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const isPasswordValid = yield encryption.comparePassword(password, user.password);
     if (isPasswordValid) {
         const token = jwt.generateToken(user.id, user.email);
-        return res.status(200).json({ value: token });
+        return res.status(200).json({ status: 200, value: token });
     }
-    return res.status(401).json({ message: "Invalid credentials" });
+    return res.status(200).json({ status: 404, message: "Invalid credentials" });
 });
 exports.login = login;
 //# sourceMappingURL=Auth.controller.js.map

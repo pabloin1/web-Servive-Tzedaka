@@ -23,9 +23,27 @@ const listOne = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const response = yield MySQL_database_1.default.executeQuery(sql);
     return response;
 });
+const update = (configuration) => __awaiter(void 0, void 0, void 0, function* () {
+    const sql = `
+        CALL UpdateConfiguration(
+            1,
+            '${configuration.mission}',
+            '${configuration.vision}',
+            '${configuration.address}',
+            '${configuration.email}',
+            '${configuration.phone}',
+            '${configuration.timetable}',
+            '${configuration.about_us}',
+            '${configuration.url_googlemap}'
+        )
+    `;
+    const response = yield MySQL_database_1.default.executeQuery(sql);
+    return response;
+});
 const ConfigurationRepository = {
     listAll,
     listOne,
+    update
 };
 exports.default = ConfigurationRepository;
 //# sourceMappingURL=Configuration.repository.js.map

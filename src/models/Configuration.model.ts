@@ -8,7 +8,9 @@ const getStructure = (): ConfigurationInterface => {
         address: "",
         email: "",
         phone: "",
-        timetable: ""
+        timetable: "",
+        about_us:"",
+        url_googlemap:""
     };
 };
 
@@ -20,7 +22,9 @@ const castConfiguration = (data: any): ConfigurationInterface => {
         address: data.address,
         email: data.email,
         phone: data.phone,
-        timetable: data.timetable
+        timetable: data.timetable,
+        about_us:data.about_us,
+        url_googlemap:data.url_googlemap
     };
 };
 

@@ -7,6 +7,7 @@ const listAll = async (
   dateFinal: string
 ): Promise<ResponseInterface> => {
   const sql: string = `CALL GetAllForms( '${dateinItial}', '${dateFinal}' )`;
+  console.log(sql)
   const response: ResponseInterface = await MySQL.executeQuery(sql);
   return response;
 };
@@ -18,19 +19,12 @@ const listOne = async (idForm: number): Promise<ResponseInterface> => {
 };
 
 const create = async (form: FormInterface): Promise<ResponseInterface> => {
-  const sql: string = `CALL CreateForm(0,'${form.subject}', '${form.full_name}', '${form.phone}', '${form.email}', '${form.message}', ${form.readed})`;
+  const sql: string = `CALL CreateForm('${form.subject}', '${form.full_name}', '${form.phone}', '${form.email}', '${form.message}', ${form.readed},'${form.date}','${form.hour}')`;
   const response: ResponseInterface = await MySQL.executeQuery(sql);
   return response;
 };
 
-const update = async (
-  idForm: number,
-  form: FormInterface
-): Promise<ResponseInterface> => {
-  const sql: string = `CALL CreateForm(${idForm}, '${form.subject}', '${form.full_name}', '${form.phone}', '${form.email}', '${form.message}', ${form.readed})`;
-  const response: ResponseInterface = await MySQL.executeQuery(sql);
-  return response;
-};
+
 
 const deleteForm = async (idForm: number): Promise<ResponseInterface> => {
   const sql: string = `CALL DeleteForm(${idForm})`;
@@ -40,9 +34,8 @@ const deleteForm = async (idForm: number): Promise<ResponseInterface> => {
 
 const updateReadStatus = async (
   idForm: number,
-  read: boolean
 ): Promise<ResponseInterface> => {
-  const sql: string = `CALL UpdateFormReadStatus(${idForm}, ${read ? 1 : 0})`;
+  const sql: string = `CALL UpdateFormReadStatus(${idForm})`;
   const response: ResponseInterface = await MySQL.executeQuery(sql);
   return response;
 };
@@ -51,7 +44,6 @@ const FormRepository = {
   listAll,
   listOne,
   create,
-  update,
   updateReadStatus,
   deleteForm,
 };

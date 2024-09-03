@@ -15,7 +15,7 @@ const createCredentials = (host, database, user, password) => ({
     queueLimit: 0
 });
 const credentialsMySQLLocal = createCredentials(Config_1.default.dbHost, Config_1.default.dbName, Config_1.default.dbUser, Config_1.default.dbPassword);
-const credentialsMySQLHosting = createCredentials('127.0.0.1', 'sinevrok_db_orve', 'sinevrok_user_orve', 'orve.password');
+const credentialsMySQLHosting = createCredentials(Config_1.default.dbHost, Config_1.default.dbName, Config_1.default.dbUser, Config_1.default.dbPassword);
 const credentialsMySQL = Server_1.default.isProduction ? credentialsMySQLHosting : credentialsMySQLLocal;
 exports.default = credentialsMySQL;
 //# sourceMappingURL=MySQL.config.js.map

@@ -16,6 +16,7 @@ router.post("/", [
 ], (req: Request, res: Response) => postUser(req, res));
 
 router.put("/:id", [
+    authenticateToken,
     param('id').isInt().withMessage('ID must be an integer'),
     body('user.email').isEmail().withMessage('Invalid email'),
     body('user.name').notEmpty().withMessage('Name is required'),
@@ -26,6 +27,7 @@ router.put("/:id", [
 router.patch('/:id/password',[validateFields], updateUserPassword)
 
 router.delete("/:id", [
+    authenticateToken,
     param('id').isInt().withMessage('ID must be an integer'),
     validateFields
 ], (req: Request, res: Response) => deleteUser(req, res));

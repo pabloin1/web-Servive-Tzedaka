@@ -18,6 +18,7 @@ router.post("/", [
     validateFields_mdl_1.validateFields
 ], (req, res) => (0, User_controller_1.postUser)(req, res));
 router.put("/:id", [
+    ValidateJWT_mdl_1.default,
     (0, express_validator_1.param)('id').isInt().withMessage('ID must be an integer'),
     (0, express_validator_1.body)('user.email').isEmail().withMessage('Invalid email'),
     (0, express_validator_1.body)('user.name').notEmpty().withMessage('Name is required'),
@@ -26,6 +27,7 @@ router.put("/:id", [
 ], (req, res) => (0, User_controller_1.putUser)(req, res));
 router.patch('/:id/password', [validateFields_mdl_1.validateFields], User_controller_1.updateUserPassword);
 router.delete("/:id", [
+    ValidateJWT_mdl_1.default,
     (0, express_validator_1.param)('id').isInt().withMessage('ID must be an integer'),
     validateFields_mdl_1.validateFields
 ], (req, res) => (0, User_controller_1.deleteUser)(req, res));

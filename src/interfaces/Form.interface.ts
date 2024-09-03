@@ -5,5 +5,7 @@ export default interface FormInterface {
     phone:string,
     email:string,
     message:string,
-    readed:boolean
+    readed:boolean,
+    date: string,
+    hour:string
 }

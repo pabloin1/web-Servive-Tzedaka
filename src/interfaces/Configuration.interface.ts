@@ -5,5 +5,7 @@ export default interface ConfigurationInterface{
     address:string,
     email:string,
     phone:string,
-    timetable:string
+    timetable:string,
+    about_us:string,
+    url_googlemap:string
 }

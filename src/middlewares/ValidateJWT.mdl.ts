@@ -6,8 +6,11 @@ const jwt = new Jwt()
 
 const authenticateToken = (req: AuthRequest, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
+    console.log(req.headers);
+    
     const token = authHeader && authHeader.startsWith('Bearer ') ? authHeader.split(' ')[1] : null;
 
+    
     if (!token) {
         return res.status(401).json({ message: "Token missing" });
     }

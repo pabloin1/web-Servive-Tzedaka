@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const MySQL_database_1 = __importDefault(require("../database/MySQL.database"));
 const listAll = (dateinItial, dateFinal) => __awaiter(void 0, void 0, void 0, function* () {
     const sql = `CALL GetAllForms( '${dateinItial}', '${dateFinal}' )`;
+    console.log(sql);
     const response = yield MySQL_database_1.default.executeQuery(sql);
     return response;
 });
@@ -24,12 +25,7 @@ const listOne = (idForm) => __awaiter(void 0, void 0, void 0, function* () {
     return response;
 });
 const create = (form) => __awaiter(void 0, void 0, void 0, function* () {
-    const sql = `CALL CreateForm(0,'${form.subject}', '${form.full_name}', '${form.phone}', '${form.email}', '${form.message}', ${form.readed})`;
-    const response = yield MySQL_database_1.default.executeQuery(sql);
-    return response;
-});
-const update = (idForm, form) => __awaiter(void 0, void 0, void 0, function* () {
-    const sql = `CALL CreateForm(${idForm}, '${form.subject}', '${form.full_name}', '${form.phone}', '${form.email}', '${form.message}', ${form.readed})`;
+    const sql = `CALL CreateForm('${form.subject}', '${form.full_name}', '${form.phone}', '${form.email}', '${form.message}', ${form.readed},'${form.date}','${form.hour}')`;
     const response = yield MySQL_database_1.default.executeQuery(sql);
     return response;
 });
@@ -38,8 +34,8 @@ const deleteForm = (idForm) => __awaiter(void 0, void 0, void 0, function* () {
     const response = yield MySQL_database_1.default.executeQuery(sql);
     return response;
 });
-const updateReadStatus = (idForm, read) => __awaiter(void 0, void 0, void 0, function* () {
-    const sql = `CALL UpdateFormReadStatus(${idForm}, ${read ? 1 : 0})`;
+const updateReadStatus = (idForm) => __awaiter(void 0, void 0, void 0, function* () {
+    const sql = `CALL UpdateFormReadStatus(${idForm})`;
     const response = yield MySQL_database_1.default.executeQuery(sql);
     return response;
 });
@@ -47,7 +43,6 @@ const FormRepository = {
     listAll,
     listOne,
     create,
-    update,
     updateReadStatus,
     deleteForm,
 };

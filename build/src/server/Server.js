@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const Config_1 = __importDefault(require("../config/Config"));
 const server = {
-    isProduction: false,
-    PORT: Config_1.default.port,
+    isProduction: true,
+    PORT: Config_1.default.PORT,
 };
 exports.default = server;
 //# sourceMappingURL=Server.js.map

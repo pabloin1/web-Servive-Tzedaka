@@ -7,6 +7,7 @@ const JWT_helper_1 = __importDefault(require("../helper/JWT.helper"));
 const jwt = new JWT_helper_1.default();
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers.authorization;
+    console.log(req.headers);
     const token = authHeader && authHeader.startsWith('Bearer ') ? authHeader.split(' ')[1] : null;
     if (!token) {
         return res.status(401).json({ message: "Token missing" });

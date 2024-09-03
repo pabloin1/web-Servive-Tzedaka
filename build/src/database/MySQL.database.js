@@ -23,7 +23,7 @@ const executeQuery = (sql) => __awaiter(void 0, void 0, void 0, function* () {
         data = {
             status: 200,
             error: false,
-            message: "successfully",
+            message: "Successfully executed query",
             value: response[0]
         };
     }
@@ -32,7 +32,7 @@ const executeQuery = (sql) => __awaiter(void 0, void 0, void 0, function* () {
         data = {
             status: 500,
             error: true,
-            message: error,
+            message: error.code ? `MySQL Error: ${error.code} - ${error.message}` : "Internal Server Error",
             value: {}
         };
     }

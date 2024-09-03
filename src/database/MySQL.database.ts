@@ -14,18 +14,17 @@ const executeQuery = async (sql: string): Promise<Response> => {
         data = {
             status: 200,
             error: false,
-            message: "successfully",
+            message: "Successfully executed query",
             value: response[0]
-        }
+        };
     } catch (error: any) {
-        console.error({ error })
+        console.error({ error });
         data = {
             status: 500,
             error: true,
-            message: error,
+            message: error.code ? `MySQL Error: ${error.code} - ${error.message}` : "Internal Server Error",
             value: {}
-        }
-
+        };
     }
     await connection.end();
     return data;

@@ -22,10 +22,10 @@ const credentialsMySQLLocal = createCredentials(
 );
 
 const credentialsMySQLHosting = createCredentials(
-    '127.0.0.1',
-    'sinevrok_db_orve',
-    'sinevrok_user_orve',
-    'orve.password'
+    config.dbHost,
+    config.dbName,
+    config.dbUser,
+    config.dbPassword
 );
 
 const credentialsMySQL = Server.isProduction ? credentialsMySQLHosting : credentialsMySQLLocal;

@@ -48,7 +48,6 @@ export const postProduct = async (req: Request, res: Response): Promise<Response
 };
 
 export const putProduct = async (req: Request, res: Response): Promise<Response> => {
-    // Obtenemos el idProduct de los parámetros de la URL
     const id: number = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
     const product: ProductInterface = req.body.product;
     const response = await ProductRepository.update(id, product);
@@ -60,18 +59,17 @@ export const putProduct = async (req: Request, res: Response): Promise<Response>
         message,
         value: idProduct
     });
+    
 };
 
 export const deleteProduct = async (req: Request, res: Response): Promise<Response> => {
     const id: number = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
     const response = await ProductRepository.deleteProduct(id);
     let { status, error, message, value } = response;
-    const idProduct = value[0][0].id;
     return res.status(status).json({
         status,
         error,
         message,
-        value:idProduct
     });
 };
 

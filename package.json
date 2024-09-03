@@ -9,7 +9,7 @@
     "store":"node ./build/src/database/migrations/SP_migration.js",
     "start:dev":"nodemon build/app.js",
     "dev":"tsc --watch",
-    "start":"node build/app.js"
+    "start":"node app.js"
   },
   "keywords": [],
   "author": "",

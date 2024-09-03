@@ -22,6 +22,7 @@ router.post(
   (req: Request, res: Response) => postProduct(req, res)
 );
 
+
 router.put(
   '/:id',
   [

@@ -9,18 +9,22 @@ const getStructure = (): FormInterface => {
     email: "",
     message: "",
     readed: false,
+    date: "",
+    hour: "",
   };
 };
 
 const castForm = (data: any): FormInterface => {
   return {
-    id: data.id,
+    id: data.id??0,
     subject: data.subject,
     full_name: data.full_name,
     phone: data.phone,
     email: data.email,
     message: data.message,
     readed: Boolean(data.readed),
+    date: data.date,
+    hour: data.hour,
   };
 };
 

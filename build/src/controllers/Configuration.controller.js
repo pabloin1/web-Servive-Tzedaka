@@ -12,14 +12,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getConfiguration = exports.getConfigurations = void 0;
+exports.putConfiguration = exports.getConfiguration = exports.getConfigurations = void 0;
 const Configuration_repository_1 = __importDefault(require("../repositories/Configuration.repository"));
 const Configuration_model_1 = __importDefault(require("../models/Configuration.model"));
 const getConfigurations = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const response = yield Configuration_repository_1.default.listAll();
     const { status, error, message, value } = response;
     const configurations = Configuration_model_1.default.castConfigurationList(value[0]);
-    return res.status(status).json({ status, error, message, value: configurations });
+    return res
+        .status(status)
+        .json({ status, error, message, value: configurations });
 });
 exports.getConfigurations = getConfigurations;
 const getConfiguration = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -30,7 +32,23 @@ const getConfiguration = (req, res) => __awaiter(void 0, void 0, void 0, functio
     const configuration = (_a = value[0]) !== null && _a !== void 0 ? _a : Configuration_model_1.default.getStructure();
     if (configuration.id === 0)
         status = 404;
-    return res.status(status).json({ status, error, message, value: configuration });
+    return res
+        .status(status)
+        .json({ status, error, message, value: configuration });
 });
 exports.getConfiguration = getConfiguration;
+const putConfiguration = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const configuration = req.body.configuration;
+    const response = yield Configuration_repository_1.default.update(configuration);
+    let { status, error, message, value } = response;
+    const idConfiguration = (_a = value[0]) === null || _a === void 0 ? void 0 : _a.id;
+    return res.status(status).json({
+        status,
+        error,
+        message,
+        value: configuration,
+    });
+});
+exports.putConfiguration = putConfiguration;
 //# sourceMappingURL=Configuration.controller.js.map
