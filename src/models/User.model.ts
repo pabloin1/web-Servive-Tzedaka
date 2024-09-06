@@ -15,7 +15,7 @@ const castUser = (data: any): UserInterface => {
     const user: UserInterface = { 
         id: data.id, 
         email:data.email,
-        name: data.username, 
+        name: data.name, 
         password: data.password ?? undefined, 
         token: data.token ?? undefined 
     };

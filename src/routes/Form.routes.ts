@@ -9,12 +9,13 @@ import {
 } from "../controllers/Form.controller";
 import { validateFields } from "../middlewares/validateFields.mdl";
 import authenticateToken from "../middlewares/ValidateJWT.mdl";
+import validateDateFormat from "../middlewares/validateFormatDate.mdl";
 
 const router = Router();
 
 router.get(
   "/:dateInitial/:dateFinal",
-  [authenticateToken, validateFields],
+  [authenticateToken, validateDateFormat, validateFields],
   (req: Request, res: Response) => getForms(req, res)
 );
 router.get(

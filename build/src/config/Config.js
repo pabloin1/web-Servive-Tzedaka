@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const isProduction = true;
+const isProduction = false;
 const configDev = {
     dbHost: "localhost",
     dbUser: "root",

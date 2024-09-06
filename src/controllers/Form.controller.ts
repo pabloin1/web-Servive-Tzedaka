@@ -10,7 +10,6 @@ export const getForms = async (
 ): Promise<Response> => {
   const dateInitial: string = req.params.dateInitial ?? "1000-01-01";
   const dateFinal: string = req.params.dateFinal ?? "1000-01-01";
-
   const response = await FormRepository.listAll(dateInitial, dateFinal);
   let { status, error, message, value } = response;
   let resApi: ResponseInterface;

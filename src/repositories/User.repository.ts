@@ -6,7 +6,7 @@ import { Argon2Encryption } from "../helper/Argon2Encryption.helper";
 const encryptionService1 = new Argon2Encryption();
 
 const listAll = async (): Promise<ResponseInterface> => {
-  const sql: string = "CALL GetAllUsers()";
+  const sql: string = "CALL GetAllUsers();";
   const response: ResponseInterface = await MySQL.executeQuery(sql);
   return response;
 };

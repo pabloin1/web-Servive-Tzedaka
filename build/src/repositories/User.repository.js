@@ -16,7 +16,7 @@ const MySQL_database_1 = __importDefault(require("../database/MySQL.database"));
 const Argon2Encryption_helper_1 = require("../helper/Argon2Encryption.helper");
 const encryptionService1 = new Argon2Encryption_helper_1.Argon2Encryption();
 const listAll = () => __awaiter(void 0, void 0, void 0, function* () {
-    const sql = "CALL GetAllUsers()";
+    const sql = "CALL GetAllUsers();";
     const response = yield MySQL_database_1.default.executeQuery(sql);
     return response;
 });

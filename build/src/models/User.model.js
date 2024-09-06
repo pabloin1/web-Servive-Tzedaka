@@ -15,7 +15,7 @@ const castUser = (data) => {
     const user = {
         id: data.id,
         email: data.email,
-        name: data.username,
+        name: data.name,
         password: (_a = data.password) !== null && _a !== void 0 ? _a : undefined,
         token: (_b = data.token) !== null && _b !== void 0 ? _b : undefined
     };

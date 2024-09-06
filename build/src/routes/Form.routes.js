@@ -8,8 +8,9 @@ const express_validator_1 = require("express-validator");
 const Form_controller_1 = require("../controllers/Form.controller");
 const validateFields_mdl_1 = require("../middlewares/validateFields.mdl");
 const ValidateJWT_mdl_1 = __importDefault(require("../middlewares/ValidateJWT.mdl"));
+const validateFormatDate_mdl_1 = __importDefault(require("../middlewares/validateFormatDate.mdl"));
 const router = (0, express_1.Router)();
-router.get("/:dateInitial/:dateFinal", [ValidateJWT_mdl_1.default, validateFields_mdl_1.validateFields], (req, res) => (0, Form_controller_1.getForms)(req, res));
+router.get("/:dateInitial/:dateFinal", [ValidateJWT_mdl_1.default, validateFormatDate_mdl_1.default, validateFields_mdl_1.validateFields], (req, res) => (0, Form_controller_1.getForms)(req, res));
 router.get("/:id", [
     ValidateJWT_mdl_1.default,
     (0, express_validator_1.param)("id").isInt().withMessage("ID must be an integer"),

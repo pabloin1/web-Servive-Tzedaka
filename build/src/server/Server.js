@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const Config_1 = __importDefault(require("../config/Config"));
 const server = {
-    isProduction: true,
+    isProduction: false,
     PORT: Config_1.default.PORT,
 };
 exports.default = server;
