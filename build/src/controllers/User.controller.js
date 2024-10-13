@@ -18,12 +18,14 @@ const User_model_1 = __importDefault(require("../models/User.model"));
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const response = yield User_repository_1.default.listAll();
     let { status, error, message, value } = response;
+    if (status === 500 && error === true)
+        return res.status(status).json({ status, error, message: "error", value });
     let userList = User_model_1.default.castUserList(value[0]);
     return res.status(status).json({
         status,
         error,
         message,
-        value: userList
+        value: userList,
     });
 });
 exports.getUsers = getUsers;
@@ -32,6 +34,8 @@ const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
     const response = yield User_repository_1.default.listOne(id);
     let { status, error, message, value } = response;
+    if (status === 500 && error === true)
+        return res.status(status).json({ status, error, message: "error", value });
     const user = (_a = value[0]) !== null && _a !== void 0 ? _a : User_model_1.default.getStructure();
     if (user.id === 0)
         status = 404;
@@ -39,7 +43,7 @@ const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         status,
         error,
         message,
-        value: user
+        value: user,
     });
 });
 exports.getUser = getUser;
@@ -47,25 +51,31 @@ const postUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = req.body.user;
     const response = yield User_repository_1.default.create(user);
     let { status, error, message, value } = response;
+    if (status === 500 && error === true)
+        return res.status(status).json({ status, error, message: "error", value });
     const idUser = value[0][0].id;
     return res.status(status).json({
         status,
         error,
         message,
-        value: idUser
+        value: idUser,
     });
 });
 exports.postUser = postUser;
 const putUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const idUser = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
+    const idUser = !isNaN(Number(req.params.id))
+        ? Number(req.params.id)
+        : 0;
     const user = req.body.user;
     const response = yield User_repository_1.default.update(idUser, user);
     let { status, error, message, value } = response;
+    if (status === 500 && error === true)
+        return res.status(status).json({ status, error, message: "error", value });
     return res.status(status).json({
         status,
         error,
         message,
-        value
+        value,
     });
 });
 exports.putUser = putUser;
@@ -74,12 +84,14 @@ const updateUserPassword = (req, res) => __awaiter(void 0, void 0, void 0, funct
     const password = req.body.password;
     const response = yield User_repository_1.default.updatePassword(id, password);
     let { status, error, message, value } = response;
+    if (status === 500 && error === true)
+        return res.status(status).json({ status, error, message: "error", value });
     const idUser = value[0][0].id;
     return res.status(status).json({
         status,
         error,
         message,
-        value: idUser
+        value: idUser,
     });
 });
 exports.updateUserPassword = updateUserPassword;
@@ -87,11 +99,13 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     const id = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
     const response = yield User_repository_1.default.deleteUser(id);
     let { status, error, message, value } = response;
+    if (status === 500 && error === true)
+        return res.status(status).json({ status, error, message: "error", value });
     return res.status(status).json({
         status,
         error,
         message,
-        value: id
+        value: id,
     });
 });
 exports.deleteUser = deleteUser;

@@ -39,6 +39,10 @@ const getForm = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const form = (_a = value[0]) !== null && _a !== void 0 ? _a : Form_model_1.default.getStructure();
     if (form.id === 0)
         status = 404;
+    if (status === 500)
+        return res
+            .status(status)
+            .json({ status, error, message: "error", value: {} });
     return res.status(status).json({ status, error, message, value: form });
 });
 exports.getForm = getForm;
@@ -46,6 +50,8 @@ const postForm = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const form = req.body.form;
     const response = yield Form_repository_1.default.create(form);
     let { status, error, message, value } = response;
+    if (status === 500 && error === true)
+        return res.status(status).json({ status, error, message: "error", value });
     const idForm = value[0][0].id;
     return res.status(status).json({ status, error, message, value: idForm });
 });
@@ -54,6 +60,8 @@ const patchFormReadStatus = (req, res) => __awaiter(void 0, void 0, void 0, func
     const id = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
     const response = yield Form_repository_1.default.updateReadStatus(id);
     let { status, error, message, value } = response;
+    if (status === 500 && error === true)
+        return res.status(status).json({ status, error, message: "error", value });
     const idForm = value[0][0].id;
     return res.status(status).json({ status, error, message, value: idForm });
 });
@@ -62,6 +70,8 @@ const deleteForm = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     const id = !isNaN(Number(req.params.id)) ? Number(req.params.id) : 0;
     const response = yield Form_repository_1.default.deleteForm(id);
     let { status, error, message, value } = response;
+    if (status === 500 && error === true)
+        return res.status(status).json({ status, error, message: "error", value });
     return res.status(status).json({ status, error, message, value: id });
 });
 exports.deleteForm = deleteForm;

@@ -8,7 +8,8 @@ export const getConfigurations = async (
   res: Response
 ): Promise<Response> => {
   const response = await ConfigurationRepository.listAll();
-  const { status, error, message, value } = response;
+  let { status, error, message, value } = response;
+  if(status === 500 && error === true) return res.status(status).json({ status, error, message:'error', value});
   const configurations = ConfigurationModel.castConfigurationList(value[0]);
   return res
     .status(status)
@@ -22,6 +23,7 @@ export const getConfiguration = async (
   const id = Number(req.params.id) || 0;
   const response = await ConfigurationRepository.listOne(id);
   let { status, error, message, value } = response;
+  if(status === 500 && error === true) return res.status(status).json({ status, error, message:'error', value});
   const configuration = value[0] ?? ConfigurationModel.getStructure();
   if (configuration.id === 0) status = 404;
 
@@ -37,6 +39,7 @@ export const putConfiguration = async (
   const configuration: ConfigurationInterface = req.body.configuration;
   const response = await ConfigurationRepository.update(configuration);
   let { status, error, message, value } = response;
+  if(status === 500 && error === true) return res.status(status).json({ status, error, message:'error', value});
   const idConfiguration = value[0]?.id;
   return res.status(status).json({
     status,
